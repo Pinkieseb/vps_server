@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Debt Manager{% endblock %}
+
+{% block content %}
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Total Debt</th>
+                <th>Last Change</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.customer_name }}</td>
+                <td>{{ customer.total_debt }}</td>
+                <td>{{ customer.last_change }}</td>
+                <td>
+                    <button class="debt-action" data-customer="{{ customer.id }}" data-action="increase">Increase Debt</button>
+                    <button class="debt-action" data-customer="{{ customer.id }}" data-action="decrease">Decrease Debt</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+    $(document).ready(function() {
+        $('.debt-action').click(function() {
+            var customerId = $(this).data('customer');
+            var action = $(this).data('action');
+            $(this).parent().html('<input type="number" class="debt-amount" placeholder="Amount"><button class="submit-debt" data-customer="' + customerId + '" data-action="' + action + '">Submit</button>');
+        });
+
+        $(document).on('click', '.submit-debt', function() {
+            var customerId = $(this).data('customer');
+            var action = $(this).data('action');
+            var amount = $(this).prev('.debt-amount').val();
+            $.ajax({
+                url: '/debtmanager/update_debt/',
+                type: 'POST',
+                data: {
+                    'customer_id': customerId,
+                    'action': action,
+                    'amount': amount,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+    alert('Debt updated successfully!');
+    $('.debt-amount').val(''); // Clear the amount input
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}

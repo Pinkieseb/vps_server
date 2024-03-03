@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'add_order' %}">Add New Order</a></li>
+            <li><a href="{% url 'add_tracking_number' %}">Add Tracking Number</a></li>
+            <li><a href="{% url 'add_loss' %}">Add Loss</a></li>
+            <li><a href="{% url 'list_losses' %}">List Losses</a></li>
+            <li><a href="{% url 'debt_manager_page' %}">Debt Manager</a></li>
+            <li><a href="{% url 'add_sale' %}">Add Sale</a></li>
+            <li><a href="{% url 'add_reload' %}">Add Reload</a></li>
+            <li><a href="{% url 'view_all_sales' %}">View All Sales</a></li>
+        </ul>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>

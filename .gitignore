@@ -1,0 +1,8 @@
+cyberpanel/
+almalinux/
+__init__.py
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
+__pycache__/
+*.tar.gz

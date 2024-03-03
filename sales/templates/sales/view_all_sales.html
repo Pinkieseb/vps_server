@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}View All Sales{% endblock %}
+
+{% block content %}
+<h2>All Sales Records</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Date/Time</th>
+            <th>Customer Name</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Profit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.datetime }}</td>
+            <td>{{ sale.customer_name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>{{ sale.amount }}</td>
+            <td>{{ sale.profit }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Loss Record{% endblock %}
+
+{% block content %}
+<h2>Add New Loss Record</h2>
+<div id="confirmationMessage" style="display:none;"></div>
+<form id="lossForm" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+<script>
+document.getElementById('lossForm').onsubmit = function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    fetch('', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            var confirmationMessage = document.getElementById('confirmationMessage');
+            confirmationMessage.innerText = data.message;
+            confirmationMessage.style.display = 'block';
+            setTimeout(function() {
+                confirmationMessage.style.display = 'none';
+            }, 2000);
+        }
+    });
+};
+</script>
+{% endblock %}

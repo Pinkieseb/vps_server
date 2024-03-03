@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}List of Loss Records{% endblock %}
+
+{% block content %}
+<h2>List of Loss Records</h2>
+<table>
+    <tr>
+        <th>Datetime</th>
+        <th>Type</th>
+        <th>Value</th>
+        <th>Loss</th>
+    </tr>
+    {% for loss in losses %}
+    <tr>
+        <td>{{ loss.datetime }}</td>
+        <td>{{ loss.get_type_display }}</td>
+        <td>{{ loss.value }}</td>
+        <td>{{ loss.loss }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

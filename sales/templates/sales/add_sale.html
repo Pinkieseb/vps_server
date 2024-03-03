@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Sale Record{% endblock %}
+
+{% block content %}
+<h2>Add New Sale Record</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        fetch('', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                alert(data.message); // Show confirmation message
+                this.reset(); // Clear the form
+            }
+        });
+    });
+    </script>
+{% endblock %}
