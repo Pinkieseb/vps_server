@@ -1,23 +1,24 @@
 {% extends "base.html" %}
-
-{% block title %}List of Loss Records{% endblock %}
-
+{% load tz %}
 {% block content %}
-<h2>List of Loss Records</h2>
 <table>
-    <tr>
-        <th>Datetime</th>
-        <th>Type</th>
-        <th>Value</th>
-        <th>Loss</th>
-    </tr>
-    {% for loss in losses %}
-    <tr>
-        <td>{{ loss.datetime }}</td>
-        <td>{{ loss.get_type_display }}</td>
-        <td>{{ loss.value }}</td>
-        <td>{{ loss.loss }}</td>
-    </tr>
-    {% endfor %}
+    <thead>
+        <tr>
+            <th>Datetime</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Loss</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for loss in losses %}
+        <tr>
+            <td data-type="datetime">{{ loss.datetime }}</td>
+            <td>{{ loss.get_type_display }}</td>
+            <td data-type="number">{{ loss.value }}</td>
+            <td data-type="number">{{ loss.loss|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

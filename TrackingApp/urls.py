@@ -27,5 +27,5 @@ urlpatterns = [
     path('sales/', include('sales.urls')),
     path('reload/', include('reload.urls')),
     path('sales/', include('sales.urls')),
-
+    path('insulinCalc/', include('insulinCalc.urls')),
 ]

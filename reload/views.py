@@ -22,28 +22,22 @@ def add_reload(request):
     return render(request, 'reload/add_reload.html', {'form': form})
 
 def view_statistics(request):
-    stats, created = Statistics.objects.get_or_create(id=1)
-    print(f"Statistics fetched: {stats.id}, created: {created}")
-    return render(request, 'reload/view_statistics.html', {'stats': stats})
-
-def view_statistics(request):
     stats, created = Statistics.objects.get_or_create(id=1)  # Ensure there's always a Statistics instance
     if stats.last_reload:
-        # Calculate the difference between now and the last reload time
+        # Existing code to calculate time difference
         now = timezone.now()
         time_difference = now - stats.last_reload
-
-        # Convert the time difference to days, hours, minutes, and seconds
+        # Existing code to format time difference
         days = time_difference.days
         seconds = time_difference.seconds
         hours = seconds // 3600
         minutes = (seconds % 3600) // 60
         seconds = (seconds % 60)
-
-        # Format the time difference
         formatted_time_difference = f"{days} Days, {hours} hours, {minutes} minutes, {seconds} seconds"
-
-        # Pass the formatted time difference to the template instead of the raw last_reload time
         stats.last_reload_formatted = formatted_time_difference
-
-    return render(request, 'reload/view_statistics.html', {'stats': stats})
+    
+    # Calculate adjusted cost price
+    latest_reload = Reload.objects.latest('datetime')
+    adjusted_cost_price = (latest_reload.cost - stats.balance) / stats.inventory if stats.inventory else 0
+    
+    return render(request, 'reload/view_statistics.html', {'stats': stats, 'adjusted_cost_price': "{:.2f}".format(adjusted_cost_price)})

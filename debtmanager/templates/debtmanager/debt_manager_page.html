@@ -1,32 +1,24 @@
 {% extends "base.html" %}
-
-{% block title %}Debt Manager{% endblock %}
-
+{% load tz %}
 {% block content %}
-    <table>
-        <thead>
-            <tr>
-                <th>Customer Name</th>
-                <th>Total Debt</th>
-                <th>Last Change</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for customer in customers %}
-            <tr>
-                <td>{{ customer.customer_name }}</td>
-                <td>{{ customer.total_debt }}</td>
-                <td>{{ customer.last_change }}</td>
-                <td>
-                    <button class="debt-action" data-customer="{{ customer.id }}" data-action="increase">Increase Debt</button>
-                    <button class="debt-action" data-customer="{{ customer.id }}" data-action="decrease">Decrease Debt</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+<table>
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th>Total Debt</th>
+            <th>Last Change</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.customer_name }}</td>
+            <td data-type="number">$ {{ customer.total_debt }}</td>
+            <td data-type="datetime">{{ customer.last_change }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
     <script>
     $(document).ready(function() {
         $('.debt-action').click(function() {

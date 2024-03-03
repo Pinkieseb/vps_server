@@ -1,33 +1,48 @@
 {% extends "base.html" %}
-
-{% block title %}Add New Sale Record{% endblock %}
-
 {% block content %}
-<h2>Add New Sale Record</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+<div class="form-container">
+    <form method="post" id="salesForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="submitBtn">Submit</button>
+    </form>
+</div>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" style="display:none;">
+    <p id="feedbackMessage"></p>
+    <button onclick="closeModal()">Close</button>
+</div>
 
 <script>
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        fetch('', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success) {
-                alert(data.message); // Show confirmation message
-                this.reset(); // Clear the form
-            }
-        });
+document.querySelector('#salesForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    var formData = new FormData(this);
+    fetch('', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+        if(data.success) {
+            document.getElementById('feedbackMessage').textContent = data.message;
+            document.getElementById('feedbackModal').style.display = 'block';
+            this.reset(); // Clear the form
+        }
     });
-    </script>
+});
+
+function closeModal() {
+    document.getElementById('feedbackModal').style.display = 'none';
+}
+</script>
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/insulinCalculatorStyle.css' %}">
+<link rel="stylesheet" href="{% static 'css/universal_table_style.css' %}">
+{% block content %}
+<div>
+    <h2>Enter Your Details</h2>
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" name="weight" value="0.0">
+    <label for="glucoseLevel">Glucose Level (mmol/L):</label>
+    <input type="number" id="glucoseLevel" name="glucoseLevel" value="0.0">
+    <label for="totalCarbs">Total Carbs (g):</label>
+    <input type="number" id="totalCarbs" name="totalCarbs" value="0">
+</div>
+<div id="results">
+    <!-- Total Insulin Dose displayed above the button -->
+    <p id="totalInsulinResult">Total Insulin Required: 0 units</p>
+    <button id="detailsToggle">More</button>
+    <table id="details" style="display: none;">
+        <tbody>
+            <tr>
+                <td data-label="Insulin Sensitivity Factor">Insulin Sensitivity Factor: <span id="isfResult">0 mmol/L</span></td>
+            </tr>
+            <tr>
+                <td data-label="Carb Ratio">Carb Ratio: <span id="crResult">0 grams of carbs</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="{% static 'js/insulinCalculator.js' %}"></script>
+{% endblock %}

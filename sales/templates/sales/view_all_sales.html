@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-
-{% block title %}View All Sales{% endblock %}
-
+{% load tz %}
 {% block content %}
-<h2>All Sales Records</h2>
 <table>
     <thead>
         <tr>
@@ -17,11 +14,11 @@
     <tbody>
         {% for sale in sales %}
         <tr>
-            <td>{{ sale.datetime }}</td>
+            <td data-type="datetime">{{ sale.datetime|date:"d/m/Y H:i" }}</td>
             <td>{{ sale.customer_name }}</td>
-            <td>{{ sale.quantity }}</td>
-            <td>{{ sale.amount }}</td>
-            <td>{{ sale.profit }}</td>
+            <td data-type="number">{{ sale.quantity }}</td>
+            <td data-type="number">{{ sale.amount|floatformat:2 }}</td>
+            <td data-type="number">{{ sale.profit|floatformat:2 }}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -1,9 +1,5 @@
 {% extends "base.html" %}
-
-{% block title %}Add New Loss Record{% endblock %}
-
 {% block content %}
-<h2>Add New Loss Record</h2>
 <div id="confirmationMessage" style="display:none;"></div>
 <form id="lossForm" method="post">
     {% csrf_token %}

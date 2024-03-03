@@ -1,34 +1,58 @@
 {% extends "base.html" %}
 
 {% load dweb_extras %}  <!-- Load custom template tags -->
-
-{% block title %}Add Tracking Number{% endblock %}
-
 {% block content %}
-<table>
-    <tr>
-        <th>OrderID</th>
-        <th>Quantity</th>
-        <th>Postage Type</th>
-        <th>Address</th>
-        <th>Tracking Number</th>
-        <th>Action</th>
-    </tr>
-    {% for order, form in orders|zip_lists:forms %}  <!-- Use the custom filter -->
-    <tr>
-        <form method="post">
-            {% csrf_token %}
-            <td>{{ order.order_id }}</td>
-            <td>{{ order.quantity }}</td>
-            <td>{{ order.postage_type }}</td>
-            <td>{{ order.address_line_1 }} {{ order.address_line_2 }} {{ order.suburb }} {{ order.state }} {{ order.postcode }}</td>
-            <td>{{ form.tracking_number }}</td>
-            <td>
+<style>
+    .table-row {
+        display: flex;
+        width: 100%;
+    }
+    .table-cell {
+        flex: 1; /* Each cell takes equal width */
+        padding: 10px; /* Consistent padding */
+        border-bottom: 1px solid #ddd; /* Bottom border for each cell */
+    }
+    .tracking-number-cell {
+        flex: 1.5; /* Adjusted to control size relative to other cells */
+    }
+    .tracking-number-input {
+        width: 100%; /* Make input take full width of its cell */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    }
+    .submit-button {
+        transform: scale(1.5); /* Scale up the button */
+        margin-left: 10px; /* Ensure consistent padding with the address box */
+    }
+</style>
+<div class="table-row" style="background-color: #f2f2f2; text-align: left;">
+    <div class="table-cell">OrderID</div>
+    <div class="table-cell">Quantity</div>
+    <div class="table-cell">Postage Type</div>
+    <div class="table-cell">Address</div>
+    <div class="table-cell tracking-number-cell">Tracking Number</div>
+    <div class="table-cell">Action</div>
+</div>
+{% for order, form in orders|zip_lists:forms %}
+    <div class="table-row">
+        <div class="table-cell">{{ order.order_id }}</div>
+        <div class="table-cell">{{ order.quantity }}</div>
+        <div class="table-cell">{{ order.postage_type }}</div>
+        <div class="table-cell">
+            {{ order.full_name }}<br>
+            {{ order.address_line_1 }}<br>
+            {% if order.address_line_2 %}{{ order.address_line_2 }}<br>{% endif %}
+            {{ order.suburb }} {{ order.state }} {{ order.postcode }}
+        </div>
+        <div class="table-cell tracking-number-cell">
+            {{ form.tracking_number }}
+        </div>
+        <div class="table-cell">
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
                 {{ form.order_id }}
-                <button type="submit">Submit</button>
-            </td>
-        </form>
-    </tr>
-    {% endfor %}
-</table>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
 {% endblock %}
