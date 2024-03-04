@@ -8,4 +8,4 @@ class OrderForm(forms.ModelForm):
 
 class TrackingNumberForm(forms.Form):
     order_id = forms.IntegerField(widget=forms.HiddenInput())
-    tracking_number = forms.CharField(label='Tracking Number', max_length=255, widget=forms.TextInput(attrs={'class': 'tracking-number-input'}))
+    tracking_number = forms.CharField(label='Tracking Number', max_length=100)

@@ -32,8 +32,11 @@
     <div class="table-cell tracking-number-cell">Tracking Number</div>
     <div class="table-cell">Action</div>
 </div>
-{% for order, form in orders|zip_lists:forms %}
-    <div class="table-row">
+{% for order, form in orders_forms %}
+<div class="table-row">
+    <form method="post" style="display: flex; width: 100%;">
+        {% csrf_token %}
+        {{ form.order_id }}
         <div class="table-cell">{{ order.order_id }}</div>
         <div class="table-cell">{{ order.quantity }}</div>
         <div class="table-cell">{{ order.postage_type }}</div>
@@ -47,12 +50,9 @@
             {{ form.tracking_number }}
         </div>
         <div class="table-cell">
-            <form method="post" style="display: inline;">
-                {% csrf_token %}
-                {{ form.order_id }}
-                <button type="submit" class="submit-button">Submit</button>
-            </form>
+            <button type="submit" class="submit-button">Submit</button>
         </div>
-    </div>
+    </form>
+</div>
 {% endfor %}
 {% endblock %}
