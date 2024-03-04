@@ -1,26 +1,77 @@
 {% extends "base.html" %}
 {% load tz %}
 {% block content %}
-<table>
-    <thead>
-        <tr>
-            <th>Date/Time</th>
-            <th>Customer Name</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-            <th>Profit</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for sale in sales %}
-        <tr>
-            <td data-type="datetime">{{ sale.datetime|date:"d/m/Y H:i" }}</td>
-            <td>{{ sale.customer_name }}</td>
-            <td data-type="number">{{ sale.quantity }}</td>
-            <td data-type="number">{{ sale.amount|floatformat:2 }}</td>
-            <td data-type="number">{{ sale.profit|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div>
+    <h2>All Sales</h2>
+    <form method="get">
+        <label for="name_filter">Name:</label>
+        <input type="text" id="name_filter" name="name" placeholder="Customer Name">
+        
+        <button type="submit">Filter</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Customer Name</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Profit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td data-type="datetime">{{ sale.datetime|date:"d/m/Y H:i" }}</td>
+                <td>{{ sale.customer_name }}</td>
+                <td data-type="number">{{ sale.quantity }}</td>
+                <td data-type="number">{{ sale.amount|floatformat:2 }}</td>
+                <td data-type="number">{{ sale.profit|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>Dweb Sales</h2>
+    <form method="get">
+        <label for="dweb_name_filter">Name:</label>
+        <input type="text" id="dweb_name_filter" name="dweb_name" placeholder="Customer Name">
+        
+        <label for="order_id_filter">Order ID:</label>
+        <input type="text" id="order_id_filter" name="order_id" placeholder="Order ID">
+        
+        <button type="submit">Filter</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Order ID</th>
+                <th>Username</th>
+                <th>Address</th>
+                <th>Tracking Number</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dweb_sale in dweb_sales %}
+            <tr>
+                <td data-type="datetime">{{ dweb_sale.datetime|date:"d/m/Y H:i" }}</td>
+                <td>{{ dweb_sale.order_id }}</td>
+                <td>{{ dweb_sale.username }}</td>
+                <td>
+                    {{ dweb_sale.full_name }}<br>
+                    {{ dweb_sale.address_line_1 }}<br>
+                    {% if dweb_sale.address_line_2 %}{{ dweb_sale.address_line_2 }}<br>{% endif %}
+                    {{ dweb_sale.suburb }} {{ dweb_sale.state }} {{ dweb_sale.postcode }}
+                </td>
+                <td>{{ dweb_sale.tracking_number }}</td>
+                <td data-type="number">{{ dweb_sale.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -17,7 +17,6 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 from reload.views import view_statistics  # Import view_statistics
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', view_statistics, name='index'),  # Make view_statistics the index page

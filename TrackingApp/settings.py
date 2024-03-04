@@ -23,20 +23,13 @@ STATICFILES_DIRS = [
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = 'zx0wqseyjb-c@#-q!zp3@dhe^x2*uwzc+rkmge2vy((pe%er_s'
 APP_DIRS = True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['techsmartbendigo.xyz', 'www.techsmartbendigo.xyz', '127.0.0.1', '82.180.163.132']
+ALLOWED_HOSTS = ['*']
 USE_TZ = True
-
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',

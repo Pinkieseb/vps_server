@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Sale
+from dweb.models import Order
 from .forms import SaleForm
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -26,5 +27,6 @@ def add_sale(request):
 
 def view_all_sales(request):
     sales = Sale.objects.all()
+    dweb_sales = Order.objects.all()  # Add this line to fetch dweb sales
     print(f"Number of sales fetched: {sales.count()}")
-    return render(request, 'sales/view_all_sales.html', {'sales': sales})
+    return render(request, 'sales/view_all_sales.html', {'sales': sales, 'dweb_sales': dweb_sales})  # Update this line to include 'dweb_sales'

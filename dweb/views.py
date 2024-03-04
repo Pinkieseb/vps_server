@@ -29,3 +29,15 @@ def add_tracking_number(request):
         orders = Order.objects.filter(tracking_number__isnull=True)
         forms = [TrackingNumberForm(initial={'order_id': order.id}) for order in orders]
     return render(request, 'dweb/add_tracking_number.html', {'forms': forms, 'orders': orders})
+
+def view_dweb_sales(request):
+    dweb_sales = Order.objects.all()
+    name_filter = request.GET.get('dweb_name', None)
+    order_id_filter = request.GET.get('order_id', None)
+
+    if name_filter:
+        dweb_sales = dweb_sales.filter(full_name__icontains=name_filter)
+    if order_id_filter:
+        dweb_sales = dweb_sales.filter(order_id__icontains=order_id_filter)
+
+    return render(request, 'dweb/view_dweb_sales.html', {'dweb_sales': dweb_sales})
